@@ -28,6 +28,7 @@ func bookByID(c *gin.Context) {
 	book, err := getBookByID(id)
 
 	if err != nil {
+		c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Book Not Found"})
 		return
 	}
 
@@ -57,6 +58,7 @@ func createBook(c *gin.Context) {
 func main() {
 	router := gin.Default()
 	router.GET("/books", getBooks)
+	router.GET("/books/:id", bookByID)
 	router.POST("/books", createBook)
 	router.Run("localhost:8080")
 }
